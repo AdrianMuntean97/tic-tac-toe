@@ -39,3 +39,14 @@ def get_computer_move(board):
     return random.choice(empty_cells)
 
 
+def check_win(board):
+    for row in range(3):
+        if board[row][0] == board[row][1] == board[row][2] != "_":
+            return board[row][0]
+        if board[0][row] == board[1][row] == board[2][row] != "_":
+            return board[0][row]
+        if board[0][0] == board[1][1] == board[2][2] != "_":
+            return board[0][0]
+        if board[0][2] == board[1][1] == board[2][0] != "_":
+            return board[0][2]
+        return None
