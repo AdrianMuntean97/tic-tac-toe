@@ -22,8 +22,8 @@ def get_player_move(board):
                 return row,col
             else:
                 print("That cell is already occupied. Please try again")
-            except (ValueError, IndexError):
-                print("Invalid input. Please try again.")
+        except (ValueError,IndexError):
+            print("Invalid input. Please try again.")
 
 
 def get_computer_move(board):
@@ -40,6 +40,9 @@ def get_computer_move(board):
 
 
 def check_win(board):
+    """
+    Check each row, column and diagonal to see if the game is won
+    """
     for row in range(3):
         if board[row][0] == board[row][1] == board[row][2] != "_":
             return board[row][0]
@@ -49,4 +52,53 @@ def check_win(board):
             return board[0][0]
         if board[0][2] == board[1][1] == board[2][0] != "_":
             return board[0][2]
-        return None
+    return None
+
+
+def play_game():
+    """
+    Main function that runs the Tic-Tac-Toe game.
+    Takes in a 2D list representing the game board.
+    Returns nothing, but prints out messages to the console based on game progress.
+    """
+    board = [["_"] * 3 for _ in range(3)]
+    player_score = 0
+    computer_score = 0
+    current_player = "X"
+    while True:
+        print("Player score:", player_score)
+        print("Computer score:", computer_score)
+        print_board(board)
+        if current_player == "X":
+            row, col = get_player_move(board)
+        else:
+            row, col = get_computer_move(board)
+            print(f"The computer played at row {row + 1}, column {col + 1}")
+        if board[row][col] == "_":
+            board[row][col] = current_player
+            winner = check_win(board)
+            if winner is not None:
+                print_board(board)
+                if winner == "X":
+                    player_score += 1
+                    print("You win!")
+                else:
+                    computer_score += 1
+                    print("The computer wins!")
+                board = [["_"] * 3 for _ in range(3)]
+                current_player = "X"
+            elif all(cell != "_" for row in board for cell in row):
+                print_board(board)
+                print("Tie game!")
+                board = [["_"] * 3 for _ in range(3)]
+                current_player = "X"
+            else:
+                current_player = "O" if current_player == "X" else "X"
+        else:
+            print("That cell is already occupied. Please try again.")
+
+
+
+play_game()
+            
+
