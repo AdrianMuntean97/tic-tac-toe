@@ -26,3 +26,16 @@ def get_player_move(board):
                 print("Invalid input. Please try again.")
 
 
+def get_computer_move(board):
+    """
+    Get a random input from the computer and print out the value
+    Checks to see if the value is valid
+    """
+    empty_cells = []
+    for row in range(3):
+        for col in range(3):
+            if board[row][col] == "_":
+                empty_cells.append((row, col))
+    return random.choice(empty_cells)
+
+
