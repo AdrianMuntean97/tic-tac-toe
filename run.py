@@ -17,13 +17,13 @@ def get_player_move(board):
     """
     while True:
         try:
-            row, col = map(int, input("Enter row and column(example: 1 2): ").split())
+            row, col = map(int, input("Enter row and column(example: 1 2): \n").split())
             if board[row][col] == "_":
                 return row,col
             else:
-                print("That cell is already occupied. Please try again")
+                print("That cell is already occupied. Please try again\n")
         except (ValueError,IndexError):
-            print("Invalid input. Please try again.")
+            print("Invalid input. Please try again.\n")
 
 
 def get_computer_move(board):
@@ -61,12 +61,14 @@ def play_game():
     Takes in a 2D list representing the game board.
     Returns nothing, but prints out messages to the console based on game progress.
     """
+    player_name = input("Enter your name: ")
+    print(f"Welcome to Tic-Tac-Toe, {player_name}!\n")
     board = [["_"] * 3 for _ in range(3)]
     player_score = 0
     computer_score = 0
     current_player = "X"
     while True:
-        print("Player score:", player_score)
+        print(f"{player_name}'s score:", player_score)
         print("Computer score:", computer_score)
         print_board(board)
         if current_player == "X":
@@ -81,7 +83,7 @@ def play_game():
                 print_board(board)
                 if winner == "X":
                     player_score += 1
-                    print("You win!")
+                    print(f"{player_name} wins!")
                 else:
                     computer_score += 1
                     print("The computer wins!")
@@ -96,7 +98,6 @@ def play_game():
                 current_player = "O" if current_player == "X" else "X"
         else:
             print("That cell is already occupied. Please try again.")
-
 
 
 play_game()
