@@ -6,7 +6,8 @@ def print_board(board):
     Print out the game board
     """
     for row in board:
-        print(" ".join(row))
+        row_str = " ".join(cell if cell != "X" else "\033[32mX\033[0m" for cell in row)
+        print(row_str)
 
 
 def get_player_move(board):
