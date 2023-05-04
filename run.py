@@ -58,15 +58,28 @@ def check_win(board):
 def play_game():
     """
     Main function that runs the Tic-Tac-Toe game.
-    Takes in a 2D list representing the game board.
+    Asks the player to choose the board size (3x3 or 4x4).
     Returns nothing, but prints out messages to the console based on game progress.
     """
     player_name = input("Enter your name: ")
     print(f"Welcome to Tic-Tac-Toe, {player_name}!\n")
-    board = [["_"] * 3 for _ in range(3)]
+
+    # Ask the player to choose the board size
+    while True:
+        board_size = input("Choose the board size (3 or 4): ")
+        if board_size == "3":
+            board = [["_"] * 3 for _ in range(3)]
+            break
+        elif board_size == "4":
+            board = [["_"] * 4 for _ in range(4)]
+            break
+        else:
+            print("Invalid input. Please enter 3 or 4.")
+
     player_score = 0
     computer_score = 0
     current_player = "X"
+    
     while True:
         print(f"{player_name}'s score:", player_score)
         print("Computer score:", computer_score)
@@ -87,12 +100,12 @@ def play_game():
                 else:
                     computer_score += 1
                     print("The computer wins!")
-                board = [["_"] * 3 for _ in range(3)]
+                board = [["_"] * len(board) for _ in range(len(board))]
                 current_player = "X"
             elif all(cell != "_" for row in board for cell in row):
                 print_board(board)
                 print("Tie game!")
-                board = [["_"] * 3 for _ in range(3)]
+                board = [["_"] * len(board) for _ in range(len(board))]
                 current_player = "X"
             else:
                 current_player = "O" if current_player == "X" else "X"
