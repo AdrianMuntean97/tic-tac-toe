@@ -32,27 +32,62 @@ def get_computer_move(board):
     Get a random input from the computer and print out the value
     Checks to see if the value is valid
     """
+    # Check if the computer can win in the next move
+    for row in range(len(board)):
+        for col in range(len(board)):
+            if board[row][col] == "_":
+                board[row][col] = "O"
+                if check_win(board) == "O":
+                    board[row][col] = "_"
+                    return row, col
+                board[row][col] = "_"
+
+    # Check if the player can win in the next move
+    for row in range(len(board)):
+        for col in range(len(board)):
+            if board[row][col] == "_":
+                board[row][col] = "X"
+                if check_win(board) == "X":
+                    board[row][col] = "_"
+                    return row, col
+                board[row][col] = "_"
+
+    # Choose a random empty cell
     empty_cells = []
-    for row in range(3):
-        for col in range(3):
+    for row in range(len(board)):
+        for col in range(len(board)):
             if board[row][col] == "_":
                 empty_cells.append((row, col))
     return random.choice(empty_cells)
+
 
 
 def check_win(board):
     """
     Check each row, column and diagonal to see if the game is won
     """
-    for row in range(3):
-        if board[row][0] == board[row][1] == board[row][2] != "_":
-            return board[row][0]
-        if board[0][row] == board[1][row] == board[2][row] != "_":
-            return board[0][row]
-        if board[0][0] == board[1][1] == board[2][2] != "_":
-            return board[0][0]
-        if board[0][2] == board[1][1] == board[2][0] != "_":
-            return board[0][2]
+    # check rows
+    for row in range(4):
+        for col in range(2):
+            if board[row][col] == board[row][col+1] == board[row][col+2] != "_":
+                return board[row][col]
+    
+    # check columns
+    for col in range(4):
+        for row in range(2):
+            if board[row][col] == board[row+1][col] == board[row+2][col] != "_":
+                return board[row][col]
+    
+    # check diagonals
+    if board[0][0] == board[1][1] == board[2][2] != "_":
+        return board[0][0]
+    if board[1][1] == board[2][2] == board[3][3] != "_":
+        return board[1][1]
+    if board[0][3] == board[1][2] == board[2][1] != "_":
+        return board[0][3]
+    if board[1][2] == board[2][1] == board[3][0] != "_":
+        return board[1][2]
+    
     return None
 
 
@@ -97,15 +132,15 @@ def play_game():
                 print_board(board)
                 if winner == "X":
                     player_score += 1
-                    print(f"{player_name} wins!")
+                    print(f"{player_name} wins!\n")
                 else:
                     computer_score += 1
-                    print("The computer wins!")
+                    print("The computer wins!\n")
                 board = [["_"] * len(board) for _ in range(len(board))]
                 current_player = "X"
             elif all(cell != "_" for row in board for cell in row):
                 print_board(board)
-                print("Tie game!")
+                print("Tie game!\n")
                 board = [["_"] * len(board) for _ in range(len(board))]
                 current_player = "X"
             else:
