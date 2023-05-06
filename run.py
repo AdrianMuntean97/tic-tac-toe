@@ -87,7 +87,12 @@ def check_win(board):
         return board[0][3]
     if board[1][2] == board[2][1] == board[3][0] != "_":
         return board[1][2]
-    
+    if board[1][3] == board[2][2] == board[3][1] != "_":
+        return board[1][3]
+    if board[1][0] == board[2][1] == board[3][2] != "_":
+        return board[1][0]
+    if board[0][1] == board[1][2] == board[2][3] != "_":
+        return board[0][1]
     return None
 
 
