@@ -6,7 +6,8 @@ def print_board(board):
     Print out the game board
     """
     for row in board:
-        row_str = " ".join(cell if cell != "X" else "\033[32mX\033[0m" for cell in row)
+        row_str = " ".join(cell if cell != "X" 
+        else "\033[32mX\033[0m" for cell in row)
         print(row_str)
 
 
@@ -18,12 +19,14 @@ def get_player_move(board):
     """
     while True:
         try:
-            row, col = map(int, input("Enter row and column(example: 1 2): \n").split())
+            row, col = map(
+                int, input("Enter row and column(example: 1 2): \n").split()
+                )
             if board[row][col] == "_":
-                return row,col
+                return row, col
             else:
                 print("That cell is already occupied. Please try again\n")
-        except (ValueError,IndexError):
+        except (ValueError, IndexError):
             print("Invalid input. Please try again.\n")
 
 
@@ -61,38 +64,31 @@ def get_computer_move(board):
     return random.choice(empty_cells)
 
 
-
-def check_win(board):
+def check_win(board, n=3):
     """
     Check each row, column and diagonal to see if the game is won
     """
     # check rows
-    for row in range(4):
-        for col in range(2):
-            if board[row][col] == board[row][col+1] == board[row][col+2] != "_":
-                return board[row][col]
-    
+    for row in board:
+        for i in range(len(row)-n+1):
+            if len(set(row[i:i+n])) == 1 and row[i] != "_":
+                return row[i]
+
     # check columns
-    for col in range(4):
-        for row in range(2):
-            if board[row][col] == board[row+1][col] == board[row+2][col] != "_":
-                return board[row][col]
-    
+    for col in range(len(board[0])):
+        for i in range(len(board)-n+1):
+            if len(set([board[j][col] for j in range(i,i+n)])) == 1 and board[i][col] != "_":
+                return board[i][col]
+
     # check diagonals
-    if board[0][0] == board[1][1] == board[2][2] != "_":
-        return board[0][0]
-    if board[1][1] == board[2][2] == board[3][3] != "_":
-        return board[1][1]
-    if board[0][3] == board[1][2] == board[2][1] != "_":
-        return board[0][3]
-    if board[1][2] == board[2][1] == board[3][0] != "_":
-        return board[1][2]
-    if board[1][3] == board[2][2] == board[3][1] != "_":
-        return board[1][3]
-    if board[1][0] == board[2][1] == board[3][2] != "_":
-        return board[1][0]
-    if board[0][1] == board[1][2] == board[2][3] != "_":
-        return board[0][1]
+    for i in range(len(board)-n+1):
+        for j in range(len(board[0])-n+1):
+            diag1 = [board[i+k][j+k] for k in range(n)]
+            diag2 = [board[i+k][j+n-k-1] for k in range(n)]
+            if len(set(diag1)) == 1 and diag1[0] != "_":
+                return diag1[0]
+            if len(set(diag2)) == 1 and diag2[0] != "_":
+                return diag2[0]
     return None
 
 
@@ -100,27 +96,29 @@ def play_game():
     """
     Main function that runs the Tic-Tac-Toe game.
     Asks the player to choose the board size (3x3 or 4x4).
-    Returns nothing, but prints out messages to the console based on game progress.
+    Returns nothing,
+    but prints out messages to the console based on game progress.
     """
     player_name = input("Enter your name: ")
     print(f"Welcome to Tic-Tac-Toe, {player_name}!\n")
 
     # Ask the player to choose the board size
     while True:
-        board_size = input("Choose the board size (3 or 4): ")
-        if board_size == "3":
-            board = [["_"] * 3 for _ in range(3)]
-            break
-        elif board_size == "4":
-            board = [["_"] * 4 for _ in range(4)]
-            break
-        else:
-            print("Invalid input. Please enter 3 or 4.")
+        board_size = input("Enter the board size: ")
+        try:
+            board_size = int(board_size)
+            if board_size < 3:
+                print("Board size must be at least 3")
+            else:
+                board = [["_"] * board_size for _ in range(board_size)]
+                break
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
 
     player_score = 0
     computer_score = 0
     current_player = "X"
-    
+
     while True:
         print(f"{player_name}'s score:", player_score)
         print("Computer score:", computer_score)
@@ -155,5 +153,3 @@ def play_game():
 
 
 play_game()
-            
-
