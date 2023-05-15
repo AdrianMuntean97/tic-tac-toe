@@ -64,7 +64,7 @@ def get_computer_move(board):
     return random.choice(empty_cells)
 
 
-def check_win(board, n=3):
+def check_win(board):
     """
     Check each row, column and diagonal to see if the game is won
     """
