@@ -68,34 +68,42 @@ def check_win(board, n=3):
     """
     Check each row, column and diagonal to see if the game is won
     """
-    # check rows
+
+    # Check rows
     for row in board:
-        for i in range(len(row)-n+1):
-            if len(set(row[i:i+n])) == 1 and row[i] != "_":
-                return row[i]
+        if set(row) == {'X'}:
+            return 'X'
+        elif set(row) == {'O'}:
+            return 'O'
 
-    # check columns
+    # Check columns
     for col in range(len(board[0])):
-        for i in range(len(board)-n+1):
-            if len(set([board[j][col] for j in range(i,i+n)])) == 1 and board[i][col] != "_":
-                return board[i][col]
+        column = [board[row][col] for row in range(len(board))]
+        if set(column) == {'X'}:
+            return 'X'
+        elif set(column) == {'O'}:
+            return 'O'
 
-    # check diagonals
-    for i in range(len(board)-n+1):
-        for j in range(len(board[0])-n+1):
-            diag1 = [board[i+k][j+k] for k in range(n)]
-            diag2 = [board[i+k][j+n-k-1] for k in range(n)]
-            if len(set(diag1)) == 1 and diag1[0] != "_":
-                return diag1[0]
-            if len(set(diag2)) == 1 and diag2[0] != "_":
-                return diag2[0]
+    # Check diagonals
+    diag1 = [board[i][i] for i in range(len(board))]
+    diag2 = [board[i][len(board) - i - 1] for i in range(len(board))]
+    if set(diag1) == {'X'}:
+        return 'X'
+    elif set(diag1) == {'O'}:
+        return 'O'
+    elif set(diag2) == {'X'}:
+        return 'X'
+    elif set(diag2) == {'O'}:
+        return 'O'
+
+    # No winner
     return None
 
 
 def play_game():
     """
     Main function that runs the Tic-Tac-Toe game.
-    Asks the player to choose the board size (3x3 or 4x4).
+    Asks the player to choose the board size (3x3 to 5x5).
     Returns nothing,
     but prints out messages to the console based on game progress.
     """
@@ -104,11 +112,11 @@ def play_game():
 
     # Ask the player to choose the board size
     while True:
-        board_size = input("Enter the board size: ")
+        board_size = input("Enter the board size (3, 4, or 5): ")
         try:
             board_size = int(board_size)
-            if board_size < 3:
-                print("Board size must be at least 3")
+            if board_size < 3 or board_size > 5:
+                print("Invalid board size. Please enter a size between 3 and 5.")
             else:
                 board = [["_"] * board_size for _ in range(board_size)]
                 break
