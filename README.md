@@ -1,32 +1,79 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Tic-Tac-Toe
 
-Welcome,
+Tic-Tac-Toe is a Python terminal game, which runs in Code Institute mock terminal on Heroku.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+Users can try to beat the computer by filling an entire row, column or diagonal with X before the computer do it with O.
 
-## Reminders
+The live link can be found here - https://tic-tac-toe-adrian.herokuapp.com/
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+![Am i Responsive](https://github.com/AdrianMuntean97/tic-tac-toe/blob/main/media/am-i-responsive.png?raw=true)
 
-## Creating the Heroku app
+## How to Play
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+Tic-Tac-Toe is based on a pen and paper game.
+In this version, the player enters their name and board size.
+The player is playing against a computer. The player is playing as X and the computer as O.
+The player and computer each take a turn to try and fill a space.
+The winner is the one that fills an entire row, column, or diagonal.
 
-1. `heroku/python`
-2. `heroku/nodejs`
+## Features
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+# Existing Features
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+- The player ability to choose his name
 
-Connect your GitHub repository and deploy as normal.
+![Player Name](https://github.com/AdrianMuntean97/tic-tac-toe/blob/main/media/player-name.png?raw=true)
 
-## Constraints
+- Player ability to choose the board size
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+![Board Size](https://github.com/AdrianMuntean97/tic-tac-toe/blob/main/media/board-size.png?raw=true)
 
----
+- Play against the computer
+- User choice is colored in green
+- Computer making random moves
 
-Happy coding!
+![Main Game](https://github.com/AdrianMuntean97/tic-tac-toe/blob/main/media/main-game.png?raw=true)
+
+- The player cannot enter the same row and column again
+- The input player provided must be valid
+
+![Invalid Input](https://github.com/AdrianMuntean97/tic-tac-toe/blob/main/media/invalid-input.png?raw=true)
+
+- Computer is trying to block the player when it detects the player will win in the next turn
+
+![Computer Block](https://github.com/AdrianMuntean97/tic-tac-toe/blob/main/media/computer-block.png?raw=true)
+
+- Computer is trying to win by detecting if it can win in the next turn
+
+![Computer Win](https://github.com/AdrianMuntean97/tic-tac-toe/blob/main/media/computer-win.png?raw=true)
+
+## Testing
+
+- I have tested the game and it works on all 3 board sizes.
+- The computer is making random moves until it detects it can win then is going for the win.
+- In the current state there are no known bugs.
+- All the features are working as intended.
+- I have tested the app on PEP8 Python Validator and no there was no error.
+
+## Bugs
+
+- Old version gave the player the choice to whatever board size he wanted.
+The old version could break the game if for example, the user selected a board size like 100x100
+making the game impossible to win (fixed by making the board size available between 3x3 to 5x5)
+
+## Deployment
+
+The project was deployed using Code Institute's mock terminal for Heroku.
+- Steps for deployment:
+    - Clone this repository
+    - Create a new Heroku app
+    - Set the buildpacks to Python and NodeJS in that order
+    - Link the Heroku app to the repository
+    - Click on Deploy
+
+## Credits
+
+- Code Institute for the deployment terminal
+
+   
+
